@@ -10,8 +10,11 @@
  
 package com.example.detectionhand;
 
+import android.Manifest;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.opengl.EGLConfig;
@@ -24,6 +27,8 @@ import android.os.Bundle;
 //import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
@@ -138,6 +143,11 @@ public class MainActivity extends AppCompatActivity implements CvCameraViewListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        while (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 0);
+
+        }
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);			// prevent screen from going to sleep
         View decorView = getWindow().getDecorView();
